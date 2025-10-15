@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mom ♥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #f0e6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            animation: sparkleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 60px 40px;
+            position: relative;
+            animation: floatIn 1s ease;
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            text-align: center;
+            background: linear-gradient(135deg, #d946ef, #ec4899, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: fadeInDown 1s ease, textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #9333ea;
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            font-style: italic;
+            animation: fadeInUp 1.2s ease, bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            animation: cardPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes cardPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(217, 70, 239, 0.1), rgba(236, 72, 153, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card::after {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            opacity: 0;
+            transition: all 0.3s ease;
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(217, 70, 239, 0.3);
+            border-color: #ec4899;
+            animation: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            animation: iconBounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .card:hover .card-icon {
+            animation: iconSpin 0.6s ease;
+        }
+
+        @keyframes iconSpin {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.3); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: #9333ea;
+            margin-bottom: 10px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-content {
+            color: #4b5563;
+            line-height: 1.6;
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card.active {
+            background: linear-gradient(135deg, #fae8ff 0%, #f3e8ff 100%);
+            border-color: #d946ef;
+            animation: none;
+        }
+
+        .card.active .card-content {
+            display: block;
+        }
+
+        .letter-section {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 5px solid #f97316;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .letter-section p {
+            color: #4b5563;
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            color: #9333ea;
+            margin-top: 30px;
+            font-size: 1.2em;
+            animation: fadeIn 2s ease;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: floatUp 6s ease-in infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .btn-celebrate {
+            display: block;
+            margin: 40px auto 0;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #ec4899, #d946ef);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+            font-weight: bold;
+            animation: buttonPulse 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3); }
+            50% { box-shadow: 0 10px 40px rgba(236, 72, 153, 0.6); }
+        }
+
+        .btn-celebrate::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-celebrate:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-celebrate:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.5);
+            animation: none;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .butterfly {
+            position: fixed;
+            font-size: 25px;
+            pointer-events: none;
+            z-index: 9998;
+            animation: butterflyFly 8s ease-in-out infinite;
+        }
+
+        @keyframes butterflyFly {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -50px) rotate(15deg);
+            }
+            50% {
+                transform: translate(200px, -20px) rotate(-15deg);
+            }
+            75% {
+                transform: translate(100px, -70px) rotate(10deg);
+            }
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        .popup-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fdf4ff 100%);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+        }
+
+        .popup-card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .popup-card::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .popup-card::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ec4899, #d946ef);
+            border-radius: 10px;
+        }
+
+        .popup-card::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #d946ef, #ec4899);
+        }
+
+        .close-button-x {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ec4899, #d946ef);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+
+        .close-button-x:hover {
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .popup-card h2 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #d946ef, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .popup-card .gif-container {
+            margin: 30px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-card .gif-container img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .popup-card p {
+            font-size: 1.3em;
+            color: #9333ea;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .close-popup {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ec4899, #d946ef);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .close-popup:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .corner-confetti {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 10002;
+        }
+
+        .corner-confetti.top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner-confetti.top-right {
+            top: 20px;
+            right: 20px;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiExplode 1.5s ease-out forwards;
+        }
+
+        @keyframes confettiExplode {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .container {
+                padding: 40px 25px;
+            }
+            .popup-card {
+                padding: 30px 20px;
+            }
+            .popup-card h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+        <div class="popup-card" onclick="event.stopPropagation()">
+            <button class="close-button-x" onclick="closePopup()">✕</button>
+            <h2>🎉 Happy Birthday Mom! 🎉</h2>
+            <div class="gif-container">
+                <img src="mom.jpg" alt="Happy Birthday">
+            </div>
+            <p>Wishing you the most amazing 42nd birthday! 💖</p>
+            <p>You deserve all the happiness in the world! 🌟</p>
+            <p>Thank you for being the most wonderful mom. Your strength, grace, and love inspire me every single day. Here's to another year of amazing memories together!</p>
+            <p>May this year bring you endless joy, laughter, and all the beautiful moments you deserve. I'm so grateful to have you as my mom! 🌸</p>
+            <button class="close-popup" onclick="closePopup()">Close 💕</button>
+        </div>
+    </div>
+
+    <!-- Corner Confetti Containers -->
+    <div class="corner-confetti top-left" id="confettiLeft"></div>
+    <div class="corner-confetti top-right" id="confettiRight"></div>
+    
+    <div class="container">
+        <h1>Happy 42nd Birthday, Mom! 🎉</h1>
+        <p class="subtitle">Celebrating the most incredible woman I know</p>
+
+        <div class="card-grid">
+            <div class="card" onclick="toggleCard(this)">
+                <span class="card-icon">💪</span>
+                <div class="card-title">Your Strength</div>
+                <div class="card-content">
+                    You've shown me what it means to be truly independent and strong. Watching you navigate life with grace and determination has taught me that I can achieve anything I set my mind to.
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <span class="card-icon">✨</span>
+                <div class="card-title">Your Grace</div>
+                <div class="card-content">
+                    At 42, you're more radiant than ever. Your elegance isn't just in how you look, but in how you carry yourself through every challenge with dignity and poise.
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <span class="card-icon">❤️</span>
+                <div class="card-title">Your Love</div>
+                <div class="card-content">
+                    Your unconditional love has been my safe harbor. You've given me the freedom to grow while always being there when I need you. That's true love.
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <span class="card-icon">🌟</span>
+                <div class="card-title">My Role Model</div>
+                <div class="card-content">
+                    You're not just my mom - you're my inspiration. You've taught me to stand on my own, speak my mind, and never settle for less than I deserve.
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <span class="card-icon">🦋</span>
+                <div class="card-title">Your Freedom</div>
+                <div class="card-content">
+                    You've taught me that being a great mother doesn't mean losing yourself. You've shown me how to maintain my identity while loving deeply - that's powerful.
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <span class="card-icon">🌸</span>
+                <div class="card-title">Growing Together</div>
+                <div class="card-content">
+                    As I grow into my own woman, I realize more each day how lucky I am. You're not just raising me - we're growing together, and I'm grateful for that journey.
+                </div>
+            </div>
+        </div>
+
+        <div class="letter-section">
+            <p>Dear Mom,</p>
+            <p>Today, as you turn 42, I want you to know how much I admire you. You're beautiful, strong, and independent - everything I aspire to be. Thank you for showing me that women can be gentle and fierce, nurturing and ambitious, loving and self-sufficient.</p>
+            <p>You've given me roots and wings - the stability to feel secure and the courage to fly. I hope this year brings you everything your heart desires because you deserve the world.</p>
+            <p>I love you more than words can express. Here's to celebrating YOU today and always!</p>
+            <div class="signature">With all my love,<br>Your Daughter 💕</div>
+        </div>
+
+        <button class="btn-celebrate" onclick="celebrate()">Click to Celebrate! 🎊</button>
+    </div>
+
+    <script>
+        // Background sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '✨';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 3000);
+        }
+
+        // Floating butterflies
+        function createButterfly() {
+            const butterfly = document.createElement('div');
+            butterfly.className = 'butterfly';
+            butterfly.innerHTML = '🦋';
+            butterfly.style.left = Math.random() * 80 + '%';
+            butterfly.style.top = Math.random() * 80 + '%';
+            butterfly.style.animationDelay = Math.random() * 2 + 's';
+            butterfly.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            document.body.appendChild(butterfly);
+            
+            setTimeout(() => butterfly.remove(), 8000);
+        }
+
+        function toggleCard(card) {
+            const wasActive = card.classList.contains('active');
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            if (!wasActive) {
+                card.classList.add('active');
+                // Create sparkles when card opens
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => createSparkle(), i * 100);
+                }
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['💖', '💕', '💗', '💝', '🌸', '✨', '🌺', '🎀'][Math.floor(Math.random() * 8)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        function createConfetti() {
+            const colors = ['#ec4899', '#d946ef', '#f97316', '#fbbf24', '#a855f7'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-10px';
+            confetti.style.animation = `confettiFall ${Math.random() * 2 + 2}s linear`;
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 4000);
+        }
+
+        function createCornerConfetti(containerId, direction) {
+            const container = document.getElementById(containerId);
+            const colors = ['#ec4899', '#d946ef', '#f97316', '#fbbf24', '#a855f7', '#10b981'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti-piece';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Random explosion direction
+                    const angle = direction === 'left' ? Math.random() * 90 : 90 + Math.random() * 90;
+                    const distance = Math.random() * 200 + 100;
+                    const tx = Math.cos(angle * Math.PI / 180) * distance;
+                    const ty = Math.sin(angle * Math.PI / 180) * distance;
+                    
+                    confetti.style.setProperty('--tx', tx + 'px');
+                    confetti.style.setProperty('--ty', ty + 'px');
+                    
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 1500);
+                }, i * 30);
+            }
+        }
+
+        function openPopup() {
+            const popup = document.getElementById('popupOverlay');
+            popup.classList.add('active');
+            
+            // Trigger corner confetti after a short delay
+            setTimeout(() => {
+                createCornerConfetti('confettiLeft', 'left');
+                createCornerConfetti('confettiRight', 'right');
+            }, 300);
+        }
+
+        function closePopup(event) {
+            if (!event || event.target.id === 'popupOverlay' || event.target.classList.contains('close-popup')) {
+                const popup = document.getElementById('popupOverlay');
+                popup.classList.remove('active');
+            }
+        }
+
+        function celebrate() {
+            // Open the popup card
+            openPopup();
+            
+            // Hearts explosion
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => createHeart(), i * 100);
+            }
+            
+            // Confetti burst
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => createConfetti(), i * 50);
+            }
+            
+            // Sparkles
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => createSparkle(), i * 150);
+            }
+            
+            // Butterflies
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createButterfly(), i * 300);
+            }
+        }
+
+        // Continuous background animations
+        window.onload = () => {
+            // Initial hearts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createHeart(), i * 1000);
+            }
+            
+            // Initial butterflies
+            setTimeout(() => createButterfly(), 500);
+            setTimeout(() => createButterfly(), 3000);
+            
+            // Periodic sparkles
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createSparkle();
+                }
+            }, 2000);
+            
+            // Periodic hearts
+            setInterval(() => {
+                createHeart();
+            }, 3000);
+            
+            // Periodic butterflies
+            setInterval(() => {
+                if (Math.random() > 0.6) {
+                    createButterfly();
+                }
+            }, 5000);
+        };
+    </script>
+</body>
+</html>
